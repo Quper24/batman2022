@@ -30,37 +30,44 @@ try {
 
   if (mute) {
     setTimeout(checkMute, 2000)
+    mute.addEventListener('change', checkMute)
+
   }
   
 
-  mute.addEventListener('change', checkMute)
-} catch {
-  console.log('На этой странице нет музыки')
-}
 
-try {
+  const pagination = document.querySelector('.pagination');
+  const paginationVideo = document.querySelector('.pagination_video');
+  const paginationButton = document.querySelector('.pagination__arrow');
+  const videos = document.querySelectorAll('video');
+
   const sliderThumbs = new Swiper('.slider-thumbs', {
     loop: true,
     spaceBetween: 20,
     slidesPerView: 3,
     centeredSlides: true,
-    loopedSlides: 4,
+    loopedSlides: 7,
   });
 
   sliderThumbs.on('click', (swiper) => {
-    swiper.slideTo(swiper.clickedIndex)
+    swiper.slideTo(swiper.clickedIndex);
+    if (paginationVideo) {
+      paginationVideo.classList.toggle('pagination_active');
+      
+      videos[swiper.clickedSlide.dataset.swiperSlideIndex].play()
+    }
   })
 
   const sliderMain = new Swiper('.slider-main', {
     loop: true,
     spaceBetween: 10,
-    loopedSlides: 4,
+    loopedSlides: 7,
   });
 
   sliderThumbs.controller.control = sliderMain;
   sliderMain.controller.control = sliderThumbs;
 
-  const videos = document.querySelectorAll('video');
+  
 
   sliderMain.on('slideChange', () => {
     for (let i = 0; i < videos.length; i += 1) {
@@ -69,13 +76,13 @@ try {
   });
 
 
-  const pagination = document.querySelector('.pagination');
-  const paginationButton = document.querySelector('.pagination__arrow');
+
 
   paginationButton.addEventListener('click', () => {
     pagination.classList.toggle('pagination_active')
   })
 
-} catch {
+} catch (e) {
+  console.log(e);
   console.log('На этой странице нет слайдера')
 }

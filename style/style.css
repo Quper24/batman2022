@@ -1,3 +1,7 @@
+:root {
+  --height-pagination: 144px;
+}
+
 @font-face {
   font-family: Roboto;
   font-weight: 400;
@@ -202,6 +206,7 @@ h1, h2, h3, p {
 
 .logo {
   animation: zoomIn 1s;
+  image-rendering: optimizeQuality;
 }
 
 @keyframes zoomIn {
@@ -256,19 +261,20 @@ h1, h2, h3, p {
   padding-right: 20px;
   z-index: 400;
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 25px);
   left: 0;
   right: 0;
   padding-bottom: 15px;
   background-color: #000;
-  min-height: 144px;
+  height: var(--height-pagination);
   padding-top: 12px;
-  transform: translateY(calc(100% - 25px));
-  transition: transform 0.5s ease-in-out;
+  transform: translateY(0);
+  transition: top 0.5s ease-in-out;
+  will-change: top;
 }
 
 .pagination_active {
-  transform: translateY(0);
+  top: calc(100% - var(--height-pagination));
 }
 
 .pagination__arrow {
@@ -349,10 +355,10 @@ h1, h2, h3, p {
   .navigation {
     position: fixed;
     top: 0;
-    left: 0;
+    left: -240px;
     bottom: 0;
     width: 240px;
-    transform: translateX(-240px);
+    transform: translateX(0);
     background-color: #260707;
     flex-direction: column;
     justify-content: flex-start;
@@ -363,7 +369,7 @@ h1, h2, h3, p {
   }
 
   .navigation_active {
-    transform: translateX(0);
+    transform: translateX(240px);
   }
 
   .navigation__list {
